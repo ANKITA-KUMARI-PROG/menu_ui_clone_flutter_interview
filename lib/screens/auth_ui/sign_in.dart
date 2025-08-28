@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:shope_ab/screens/auth_ui/dashboard_screen.dart';
 import 'package:shope_ab/screens/auth_ui/sign_up_screen.dart';
 import 'package:shope_ab/utils/app_constant.dart';
 
@@ -133,7 +134,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: size.height * 0.06,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.offAll(() => SignUpScreen()
+                        Get.offAll(() => DashboardScreen()
                           
                         );
                       },

@@ -152,8 +152,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           colorBehindNavBar: AppConstant.appBackgroundColor,
           boxShadow: [
             BoxShadow(
-              color: Colors.black,
-              blurRadius: 10,
+              color: AppConstant.appPrimaryColor,
+              blurRadius: 1,
               offset: const Offset(0, -2),
             ),
           ],
@@ -321,13 +321,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         decoration: BoxDecoration(
           color: AppConstant.appCardColor,
           borderRadius: BorderRadius.circular(25),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          
         ),
         child: Row(
           children: [
@@ -670,8 +664,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black,
-                  blurRadius: 12,
+                  color: Colors.grey,
+                  blurRadius: 1,
                   offset: const Offset(0, 4),
                 ),
               ],

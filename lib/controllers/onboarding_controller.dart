@@ -15,10 +15,10 @@ class OnboardingController extends GetxController {
 
   void updatePageIndicator(index) => currentpageindex.value = index;
 
-  void dotNavigationClick(index) {
-    currentpageindex.value = index;
-    pageController.jumpTo(index);
-  }
+  // void dotNavigationClick(index) {
+  //   currentpageindex.value = index;
+  //   Get.to;
+  // }
 
   void nextPage() {
     if (currentpageindex == 2) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shope_ab/controllers/onboarding_controller.dart';
+import 'package:shope_ab/screens/auth_ui/sign_in.dart';
 import 'package:shope_ab/utils/app_constant.dart';
 
 // ignore: camel_case_types
@@ -15,7 +17,7 @@ class skipbutton extends StatelessWidget {
       right: size.width * 0.07,
       child: TextButton(
         onPressed: () {
-          OnboardingController.instance.skipPage();
+          Get.to(() => SignInScreen());
         },
         child: Text(
           "skip",

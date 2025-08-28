@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shope_ab/controllers/onboarding_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-// ignore: camel_case_types
 class onboardingnavigation extends StatelessWidget {
   const onboardingnavigation({super.key, required this.size});
 
@@ -17,7 +16,6 @@ class onboardingnavigation extends StatelessWidget {
 
       child: SmoothPageIndicator(
         controller: controller.pageController,
-        onDotClicked: controller.dotNavigationClick,
         count: 3,
         effect: ColorTransitionEffect(
           paintStyle: PaintingStyle.fill,

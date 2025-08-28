@@ -28,7 +28,16 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+
 	<key>UISupportedInterfaceOrientations</key>
+	
+<key>NSCameraUsageDescription</key>
+<string>This app needs camera access to take photos.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>This app needs photo library access to update your profile picture.</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>This app needs photo library write access.</string>
+
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

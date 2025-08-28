@@ -1,10 +1,36 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart'; // <-- Add this
+import 'package:shope_ab/screens/auth_ui/dashboard_screen.dart';
 import 'package:shope_ab/screens/auth_ui/sign_in.dart';
 import 'package:shope_ab/utils/app_constant.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+File? _imageFile;
+final ImagePicker _picker = ImagePicker();
+
+Future<void> _pickImage() async {
+  try {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  } catch (e) {
+    debugPrint("Error picking image: $e");
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +43,8 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.offAll(() => SignInScreen())),
+          onPressed: () => Get.offAll(() => const DashboardScreen()),
+        ),
         title: Text(
           "Profile Settings",
           style: AppConstant.textStyleTitle.copyWith(
@@ -32,13 +59,17 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            /// Profile Avatar + Info
             SizedBox(height: size.height * 0.02),
+
+            /// Profile Avatar + Camera button
             Stack(
               children: [
                 CircleAvatar(
                   radius: size.width * 0.15,
-                  backgroundImage: const AssetImage("assets/images/logo.png"),
+                  backgroundImage: _imageFile != null
+                      ? FileImage(_imageFile!)
+                      : const AssetImage("assets/images/person.png")
+                          as ImageProvider,
                 ),
                 Positioned(
                   bottom: 5,
@@ -46,12 +77,16 @@ class ProfileScreen extends StatelessWidget {
                   child: CircleAvatar(
                     radius: size.width * 0.045,
                     backgroundColor: AppConstant.appPrimaryColor,
-                    child: const Icon(Icons.camera_alt,
-                        color: Colors.white, size: 18),
+                    child: InkWell(
+                      onTap: _pickImage,
+                      child: const Icon(Icons.camera_alt,
+                          color: Colors.white, size: 18),
+                    ),
                   ),
-                )
+                ),
               ],
             ),
+
             SizedBox(height: size.height * 0.015),
             Text(
               "Albert Stevano Baptist",
@@ -85,8 +120,9 @@ class ProfileScreen extends StatelessWidget {
                   child: Text(
                     "See All",
                     style: TextStyle(
-                        color: AppConstant.appPrimaryColor,
-                        fontSize: size.height * 0.016),
+                      color: AppConstant.appPrimaryColor,
+                      fontSize: size.height * 0.016,
+                    ),
                   ),
                 ),
               ],
@@ -175,8 +211,8 @@ class ProfileScreen extends StatelessWidget {
           fontSize: size.height * 0.017,
         ),
       ),
-      trailing: const Icon(Icons.arrow_forward_ios,
-          size: 16, color: Colors.grey),
+      trailing:
+          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
       onTap: onTap,
     );
   }
