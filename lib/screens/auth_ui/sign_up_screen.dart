@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/utils.dart';
-import 'package:lottie/lottie.dart';
-import 'package:shope_ab/screens/auth_ui/google_sign_in.dart';
-import 'package:shope_ab/screens/auth_ui/sign_in.dart';
+import 'package:shope_ab/screens/auth_ui/verification_screen.dart';
+
 import 'package:shope_ab/utils/app_constant.dart';
+
+import 'sign_in.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -13,205 +14,252 @@ class SignUpScreen extends StatefulWidget {
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
-final textSignUpScreen = AppConstant.signUp;
-    final imagegoogle = "assets/images/Google.svg";
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+  bool _termsAccepted = false;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return KeyboardVisibilityBuilder(
       builder: (context, isKeyboardVisible) {
         return Scaffold(
+          backgroundColor: AppConstant.appBackgroundColor,
           appBar: AppBar(
-            backgroundColor: AppConstant.appSecondColor,
-            centerTitle: true,
-            title: Text(AppConstant.signUp, style: AppConstant.textstyleWelcom),
+            backgroundColor: AppConstant.appBackgroundColor,
+            title: Text(
+              AppConstant.signUpText,
+              style: AppConstant.textStyleSignUp,
+            ),
           ),
-          body: 
-                  
-          
-          SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Container(
-              decoration: BoxDecoration(color: AppConstant.appBackGroundColor),
-              child:  
-              
-               Column(
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: size.height * 0.02),
                 
-                children: [
-                   isKeyboardVisible
-                      ? Text(AppConstant.welcomeScreen, style: AppConstant.textStyleSignInwithGoogle,)
-                      : 
-                  Container(alignment: Alignment.center,
-                    child: Text(AppConstant.welcomeScreen, style: AppConstant.textstyleWelcom,)),
-                      
-                      
-                    
-            
-                
-            
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
-            
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: size.width * 0.057,
-                        right: size.width * 0.057,
+                // Subtitle
+                Text(
+                  AppConstant.createAccountText,
+                  style: AppConstant.textStyleSubtitle,
+                ),
+                SizedBox(height: size.height * 0.03),
+
+                // Name field
+                _buildTextField(
+                  hint: AppConstant.nameHint,
+                  icon: Icons.person_outline,
+                  keyboardType: TextInputType.name,
+                ),
+                SizedBox(height: size.height * 0.02),
+
+                // Email field
+                _buildTextField(
+                  hint: AppConstant.emailHint,
+                  icon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(height: size.height * 0.02),
+
+                // Phone field
+                _buildTextField(
+                  hint: AppConstant.phoneHint,
+                  icon: Icons.phone_outlined,
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: size.height * 0.02),
+
+                // Date of birth field
+                _buildTextField(
+                  hint: AppConstant.dobHint,
+                  icon: Icons.calendar_today_outlined,
+                  keyboardType: TextInputType.datetime,
+                ),
+                SizedBox(height: size.height * 0.02),
+
+                // Password field
+                TextFormField(
+                  cursorColor: AppConstant.appPrimaryColor,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: size.height * 0.02,
+                      horizontal: 15,
+                    ),
+                    hintText: AppConstant.passwordHint,
+                    hintStyle: AppConstant.textStyleHint,
+                    prefixIcon: Icon(
+                      Icons.lock_outline,
+                      size: size.height * 0.03,
+                      color: AppConstant.appIconColor,
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                      child: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        size: size.height * 0.03,
+                        color: AppConstant.appIconColor,
                       ),
-                      child: TextFormField(
-                        cursorColor: AppConstant.appSecondColor,
-                        keyboardType: TextInputType.name,
-            
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          hintText: "User Name",
-                          prefixIcon: Icon(
-                            Icons.person,
-                            size: Get.size.height / 29,
-                            color: AppConstant.appSecondaryColor,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(17),
-                          ),
-                        ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: AppConstant.appBorderColor,
+                        width: 1,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: AppConstant.appPrimaryColor,
+                        width: 1.5,
                       ),
                     ),
                   ),
-            
-                  
-                    Container(
-                    margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
-            
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: size.width * 0.057,
-                        right: size.width * 0.057,
+                ),
+                SizedBox(height: size.height * 0.02),
+
+                // Confirm password field
+                TextFormField(
+                  cursorColor: AppConstant.appPrimaryColor,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: _obscureConfirmPassword,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: size.height * 0.02,
+                      horizontal: 15,
+                    ),
+                    hintText: AppConstant.confirmPasswordHint,
+                    hintStyle: AppConstant.textStyleHint,
+                    prefixIcon: Icon(
+                      Icons.lock_outline,
+                      size: size.height * 0.03,
+                      color: AppConstant.appIconColor,
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureConfirmPassword = !_obscureConfirmPassword;
+                        });
+                      },
+                      child: Icon(
+                        _obscureConfirmPassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        size: size.height * 0.03,
+                        color: AppConstant.appIconColor,
                       ),
-                      child: TextFormField(
-                        cursorColor: AppConstant.appSecondColor,
-                        keyboardType: TextInputType.numberWithOptions(decimal: false),
-            
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          hintText: "Phone",
-                          prefixIcon: Icon(
-                            Icons.phone,
-                            size: Get.size.height / 29,
-                            color: AppConstant.appSecondaryColor,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(17),
-                          ),
-                        ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: AppConstant.appBorderColor,
+                        width: 1,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: AppConstant.appPrimaryColor,
+                        width: 1.5,
                       ),
                     ),
                   ),
-                 Container(
-                   margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
-            
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: size.width * 0.057,
-                        right: size.width * 0.057,
-                      ),
-                      child: TextFormField(
-                        cursorColor: AppConstant.appSecondColor,
-                        keyboardType: TextInputType.streetAddress,
-            
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          hintText: "City",
-                          prefixIcon: Icon(
-                            Icons.location_city,
-                            size: Get.size.height / 29,
-                            color: AppConstant.appSecondaryColor,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(17),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-            
-                  
-                   Container(
-                   margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
-            
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: size.width * 0.057,
-                        right: size.width * 0.057,
-                      ),
-                      child: TextFormField(
-                        cursorColor: AppConstant.appSecondColor,
-                        keyboardType: TextInputType.visiblePassword,
-            
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          hintText: "Enter Email",
-                          prefixIcon: Icon(
-                            Icons.email,
-                            size: Get.size.height / 29,
-                            color: AppConstant.appSecondaryColor,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(17),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-            
-                  
-                 
-            
-                  Container(
-                     margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
-                child: 
-            
-                  Padding(
-                      padding: EdgeInsets.only(
-                        left: size.width * 0.057,
-                        right: size.width * 0.057,
-                      ),
-                      child: TextFormField(
-                        cursorColor: AppConstant.appSecondColor,
-                        keyboardType: TextInputType.emailAddress,
-            
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          hintText: "Password",
-                          suffixIcon: Icon(Icons.visibility_off),
-                          prefixIcon: Icon(
-                            Icons.password,
-                            size: Get.size.height / 29,
-                            color: AppConstant.appSecondaryColor,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(17),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.04),
-                Container( margin: EdgeInsets.only(right: 30),
-                  alignment: Alignment.centerRight,
-                  child: Text(AppConstant.forgetPassword,style: TextStyle(color: AppConstant.appErrorColor, fontWeight: FontWeight.bold), ),),
-                    SizedBox(height: size.height*0.02,),
-              forgoogleEmail(text: textSignUpScreen,page:  const GoogleSignIn(),  
-              ),
-               SizedBox(height: size.height * 0.04),
-                Row(mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                SizedBox(height: size.height * 0.02),
+
+                // Terms and conditions
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text(AppConstant.alreadyHaveAnAccount,style: AppConstant.textStyleDontHaveAccount),
-                   
-                   GestureDetector(onTap: () => Get.offAll(()=>SignIn()),
-                    child: Text(AppConstant.signIn,style: AppConstant.textStyleSignUp,))
-                ],)],
-              ),
+                    Checkbox(
+                      value: _termsAccepted,
+                      onChanged: (value) {
+                        setState(() {
+                          _termsAccepted = value ?? false;
+                        });
+                      },
+                      activeColor: AppConstant.appPrimaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          style: AppConstant.textStyleNormal,
+                          children: [
+                            TextSpan(text: AppConstant.termsPart1),
+                            TextSpan(
+                              text: AppConstant.termsPart2,
+                              style: AppConstant.textStyleLink,
+                            ),
+                            TextSpan(text: AppConstant.termsPart3),
+                            TextSpan(
+                              text: AppConstant.termsPart4,
+                              style: AppConstant.textStyleLink,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: size.height * 0.03),
+
+                // Sign up button
+                SizedBox(
+                  width: double.infinity,
+                  height: size.height * 0.06,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.offAll(() =>  VerificationScreen());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppConstant.appPrimaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      AppConstant.signUpText,
+                      style: AppConstant.textStyleButton,
+                    ),
+                  ),
+                ),
+                SizedBox(height: size.height * 0.03),
+
+                // Already a member
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppConstant.alreadyHaveAccount,
+                      style: AppConstant.textStyleNormal,
+                    ),
+                    SizedBox(width: 5),
+                    GestureDetector(
+                      onTap: () => Get.offAll(() => const SignInScreen()),
+                      child: Text(
+                        AppConstant.signInText,
+                        style: AppConstant.textStyleLink,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: size.height * 0.04),
+              ],
             ),
           ),
         );
@@ -219,40 +267,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-   
-
-
-
-
-    Widget forgoogleEmail({ required String text, required Widget page} ) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) =>page),
-        );
-      },
-      
-      child: 
-      Padding(
-        padding: const EdgeInsets.only(),
-        child: Container(
-          height: 50,
-          width: 200,
-          margin: EdgeInsets.only(right: 30, left: 30,top: 10),
-          decoration: BoxDecoration(
-            color: AppConstant.appSecondaryColor,
-            borderRadius: BorderRadius.circular(25),
+  Widget _buildTextField({
+    required String hint,
+    required IconData icon,
+    required TextInputType keyboardType,
+  }) {
+    final size = MediaQuery.of(context).size;
+    return TextFormField(
+      cursorColor: AppConstant.appPrimaryColor,
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          vertical: size.height * 0.02,
+          horizontal: 15,
+        ),
+        hintText: hint,
+        hintStyle: AppConstant.textStyleHint,
+        prefixIcon: Icon(
+          icon,
+          size: size.height * 0.03,
+          color: AppConstant.appIconColor,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: AppConstant.appBorderColor,
+            width: 1,
           ),
-
-          alignment: Alignment.center,
-
-        child:
-
-              Text(text, style: AppConstant.textStyleSignInwithGoogle),
-
-
-          
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: AppConstant.appPrimaryColor,
+            width: 1.5,
+          ),
         ),
       ),
     );

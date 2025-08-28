@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shope_ab/controllers/google_sign_in.dart';
 import 'package:shope_ab/screens/auth_ui/email_sign_in.dart';
-import 'package:shope_ab/screens/auth_ui/google_sign_in.dart';
+
+import 'package:shope_ab/screens/auth_ui/sign_in.dart';
 import 'package:shope_ab/utils/app_constant.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+  WelcomeScreen({super.key});
 
+  final GoogleSignInController googleSignInController = Get.put(
+    GoogleSignInController(),
+  );
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
-
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
@@ -19,9 +24,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     final textgoogle = AppConstant.signInWithGoogle;
     final imagegoogle = "assets/images/Google.svg";
     final textEmail = AppConstant.signInWithEmail;
-   
-   
-   
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -50,34 +53,43 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               style: AppConstant.textstyleHappyShooping,
             ),
           ),
-         
-         SizedBox(height: size.height*0.22,),
-          forgoogleEmail(image: imagegoogle,text: textgoogle,page:  const GoogleSignIn(),  
-         ),
-          
-         SizedBox(height: size.height*0.02,),
-          forgoogleEmail(image: AppConstant.imageEmail,text: textEmail,page: const EmailSignIn(),
+
+          SizedBox(height: size.height * 0.22),
+          forgoogleEmail(
+            image: imagegoogle,
+            text: textgoogle,
+            page: const SignInScreen(), googleSignInController: GoogleSignInController(),
           ),
-          
+
+          SizedBox(height: size.height * 0.02),
+          forgoogleEmail(
+            image: AppConstant.imageEmail,
+            text: textEmail,
+            page: const EmailSignIn(), googleSignInController: GoogleSignInController(),
+          ),
         ],
       ),
     );
   }
 
-  Widget forgoogleEmail({required String image, required String text, required Widget page} ) {
+  Widget forgoogleEmail({
+    required String image,
+    required String text,
+    required Widget page,
+    required  GoogleSignInController  googleSignInController,
+  }) {
     return InkWell(
       onTap: () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) =>page),
+          MaterialPageRoute(builder: (context) => page),
         );
       },
-      
-      child: 
-      Padding(
+
+      child: Padding(
         padding: const EdgeInsets.only(),
         child: Container(
-          margin: EdgeInsets.only(right: 30, left: 30,top: 20),
+          margin: EdgeInsets.only(right: 30, left: 30, top: 20),
           decoration: BoxDecoration(
             color: AppConstant.appSecondaryColor,
             borderRadius: BorderRadius.circular(25),
